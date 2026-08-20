@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+src/shapeup_scan/__init__.py
+src/shapeup_scan/__main__.py
+src/shapeup_scan/cli.py
+src/shapeup_scan/detector.py
+src/shapeup_scan/scanner.py
+src/shapeup_scan.egg-info/PKG-INFO
+src/shapeup_scan.egg-info/SOURCES.txt
+src/shapeup_scan.egg-info/dependency_links.txt
+src/shapeup_scan.egg-info/entry_points.txt
+src/shapeup_scan.egg-info/top_level.txt

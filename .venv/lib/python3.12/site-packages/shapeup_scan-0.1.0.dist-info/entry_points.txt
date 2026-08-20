@@ -1,0 +1,2 @@
+[console_scripts]
+shapeup-scan = shapeup_scan.cli:main
