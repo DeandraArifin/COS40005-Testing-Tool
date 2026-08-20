@@ -61,5 +61,4 @@ def build_node_test_plan(project: Project) -> list[TestStep]:
             command="npx tsc --noEmit",
             description="Check the project for TypeScript type errors"
         ))
-
     return steps

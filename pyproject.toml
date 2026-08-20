@@ -7,6 +7,9 @@ name = "shapeup-scan"
 version = "0.1.0"
 description = "Automated application quality assessment tool"
 requires-python = ">=3.11"
+dependencies = [
+    "playwright",
+]
 
 [project.scripts]
 shapeup-scan = "shapeup_scan.cli:main"
