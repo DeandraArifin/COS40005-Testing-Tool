@@ -3,6 +3,36 @@ from pathlib import Path
 
 def detect_project(repo: Path) -> dict:
 
+    result = detect_at_path(repo)
+
+    if result["type"] != "unknown":
+
+        return result
+
+
+    for child in repo.iterdir():
+
+        if child.is_dir() and not child.name.startswith("."):
+
+            result = detect_at_path(child)
+
+            if result["type"] != "unknown":
+
+                result["project_root"] = str(child)
+
+                return result
+
+    return {
+
+        "type": "unknown",
+        "language": "unknown",
+        "package_manager": "unknown",
+        "project_root": str(repo),
+
+    }
+
+def detect_at_path(repo: Path) -> dict:
+
     if (repo / "package.json").exists():
         return {
             "type": "node",
@@ -38,7 +68,7 @@ def detect_project(repo: Path) -> dict:
             "package_manager": "Gradle",
         }
 
-    if (repo / ".sln").exists() or (repo / ".csproj").exists():
+    if (any(repo.glob("*.sln"))).exists() or (any(repo.glob("*.csproj"))).exists():
         return {
             "type": "dotnet",
             "language": "C#",

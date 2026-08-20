@@ -1,12 +1,13 @@
 import subprocess
 import os
 import tempfile
+from pathlib import Path
 
 from shapeup_scan.detector import detect_project
 
 def scan_repository(repository_url):
     with tempfile.TemporaryDirectory() as temp_dir:
-        repo_path = os.path.join(temp_dir, "repo")
+        repo_path = Path(temp_dir) / "repo"
 
         print("Cloning repository from URL:", repository_url)
         
@@ -20,3 +21,5 @@ def scan_repository(repository_url):
         print("Clone completed. Scanning the repository for application type...")
 
         project = detect_project(repo_path)
+
+        print(f"Scan completed. Detected project type: {project['type']}\nLanguage: {project['language']}\nPackage Manager: {project['package_manager']}\nProject Root: {project['project_root']}")
