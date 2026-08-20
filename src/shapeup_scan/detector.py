@@ -1,5 +1,6 @@
 from pathlib import Path
 from shapeup_scan.models import Project
+import json
 
 IGNORE_DIRS = {
     ".git",
@@ -51,14 +52,16 @@ def detect_projects(repo: Path) -> list[Project]:
     return projects
 
 def detect_at_path(repo: Path) -> Project:
+    
 
     if (repo / "package.json").exists() or (repo/"package-lock.json").exists() or (repo / "yarn.lock").exists() or (repo / "pnpm-lock.yaml").exists():
-        return Project (
+        return detect_scripts(
+            repo, project = Project(
             type="node",
-            language="JavaScript/TypeScript",
+            language=detect_node_language(repo),
             package_manager=detect_node_package_manager(repo),
             project_root=str(repo),
-            evidence=detect_evidence(["package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml"], repo)
+            evidence=detect_evidence(["package.json", "package-lock.json", "yarn.lock", "pnpm-lock.yaml"], repo))
         )
 
     if (repo / "pyproject.toml").exists() or (repo / "setup.py").exists() or (repo / "Pipfile").exists():
@@ -202,3 +205,24 @@ def detect_swift_package_manager(repo: Path) -> str:
         return "CocoaPods"
 
     return "unknown"
+
+def detect_scripts(repo: Path, project: Project) -> Project:
+    if (repo / "package.json").exists():
+        with open(repo / "package.json") as f:
+            package_json = json.load(f)
+            scripts = package_json.get("scripts", {})
+            project.scripts = scripts
+
+    return project
+
+def detect_node_language(repo: Path) -> str:
+    if (repo / "tsconfig.json").exists():
+        return "TypeScript"
+
+    if any(repo.rglob("*.ts")) or any(repo.rglob("*.tsx")):
+        return "TypeScript"
+
+    if any(repo.rglob("*.js")) or any(repo.rglob("*.jsx")):
+        return "JavaScript"
+
+    return "JavaScript"
