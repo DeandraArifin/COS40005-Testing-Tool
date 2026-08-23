@@ -1,3 +1,8 @@
 .venv/
 __pycache__/
 *.pyc
+shapeup-scan-report-*.log
+reports/
+examples/*/node_modules/
+examples/*/dist/
+examples/*/package-lock.json

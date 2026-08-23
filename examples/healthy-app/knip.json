@@ -1,0 +1,4 @@
+{
+  "entry": ["src/server.js", "src/math.test.js", "scripts/build.js"],
+  "project": ["src/**/*.js", "scripts/**/*.js"]
+}

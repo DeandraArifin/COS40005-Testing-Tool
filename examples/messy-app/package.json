@@ -1,0 +1,9 @@
+{
+  "name": "messy-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Demo app missing lint/test/build and containing duplicated code",
+  "scripts": {
+    "start": "node src/server.js"
+  }
+}

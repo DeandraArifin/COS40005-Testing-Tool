@@ -1,0 +1,15 @@
+{
+  "name": "broken-ui-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo app that boots but has browser console and page errors",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test",
+    "lint": "eslint .",
+    "build": "node -e \"console.log('build ok')\""
+  },
+  "devDependencies": {
+    "eslint": "^9.8.0"
+  }
+}
